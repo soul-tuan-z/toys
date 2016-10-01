@@ -11,7 +11,7 @@ using namespace std;
  *   [ [1,2,3],
  *     [4,5,6],
  *     [7,8,9] ]
- *   return [1,2,3,6,9,8,7,4,1]
+ *   return [1,2,3,6,9,8,7,4,5]
  *
  */
 
@@ -30,55 +30,55 @@ public:
         func.push_back(bind(&Solution::goUp, this, ref(ret), ref(matrix), ref(up), ref(left), placeholders::_1, placeholders::_2));
         int nextStatus[4] = {1, 2, 3, 0};
         int status = 0;
-        int x = 0, y = -1;
+        int row = 0, col = -1;
         while (ret.size() != matrix.size() * matrix[0].size()) {
-            if (!func[status](x, y)) {
+            if (!func[status](row, col)) {
                 status = nextStatus[status];
             }
         }
         return ret;
     }
 
-    bool goLeft(vector<int>& ret, vector<vector<int>>& matrix, int& left, int& down, int& x, int& y) {
-        if (y - 1 >left) {
-            y -= 1;
-            if (y - 1 == left) {
+    bool goLeft(vector<int>& ret, vector<vector<int>>& matrix, int& left, int& down, int& row, int& col) {
+        if (col - 1 >left) {
+            col -= 1;
+            if (col - 1 == left) {
                 --down;
             }
-            ret.push_back(matrix[x][y]);
+            ret.push_back(matrix[row][col]);
             return true;
         }
         return false;
     }
-    bool goRight(vector<int>& ret, vector<vector<int>>& matrix, int& right, int& up, int& x, int& y) {
-        if (y + 1 < right) {
-            y += 1;
-            if (y + 1 == right) {
+    bool goRight(vector<int>& ret, vector<vector<int>>& matrix, int& right, int& up, int& row, int& col) {
+        if (col + 1 < right) {
+            col += 1;
+            if (col + 1 == right) {
                 ++up;
             }
-            ret.push_back(matrix[x][y]);
+            ret.push_back(matrix[row][col]);
             return true;
         }
         return false;
     }
-    bool goUp(vector<int>& ret, vector<vector<int>>& matrix, int &up, int &left, int& x, int& y) {
-        if (x - 1 > up) {
-            x -= 1;
-            if (x - 1 == up) {
+    bool goUp(vector<int>& ret, vector<vector<int>>& matrix, int &up, int &left, int& row, int& col) {
+        if (row - 1 > up) {
+            row -= 1;
+            if (row - 1 == up) {
                 ++left;
             }
-            ret.push_back(matrix[x][y]);
+            ret.push_back(matrix[row][col]);
             return true;
         }
         return false;
     }
-    bool goDown(vector<int>& ret, vector<vector<int>>& matrix, int &down, int &right, int& x, int& y) {
-        if (x + 1 < down) {
-            x += 1;
-            if (x + 1 == down) {
+    bool goDown(vector<int>& ret, vector<vector<int>>& matrix, int &down, int &right, int& row, int& col) {
+        if (row + 1 < down) {
+            row += 1;
+            if (row + 1 == down) {
                 --right;
             }
-            ret.push_back(matrix[x][y]);
+            ret.push_back(matrix[row][col]);
             return true;
         }
         return false;
